@@ -1,60 +1,100 @@
-<?php
-$servername = "localhost";
-$username = "root"; 
-$password = ""; 
-$database = "register";
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $database);
+    <link rel="website icon" type="png" href="./assets/img/Untold Coding.png" />
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+    <link rel="stylesheet" href="assets/css/styles.css" />
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Prevent undefined array key errors
-    $email = trim($_POST['email'] ?? '');
-    $username = trim($_POST['username'] ?? '');
-    $password = $_POST['password'] ?? '';
-    $confirm_password = $_POST['confirm_password'] ?? '';
+    <title>Register</title>
+  </head>
+  <body>
+    <div class="login">
+      <video id="video1" autoplay muted loop>
+        <source src="./assets/video/play.mp4" type="video/mp4" />
+      </video>
+      <form action="register_1.php" method="POST" class="form">
+        <h1 class="head">Login</h1>
 
-    // Validate inputs
-    if (empty($email) || empty($username) || empty($password) || empty($confirm_password)) {
-        die("Error: All fields are required. <a href='register.html'>Go Back</a>");
-    }
+        <div class="content">
+          <div class="box">
+            <i class="ri-user-3-line login__icon"></i>
 
-    // Check if passwords match
-    if ($password !== $confirm_password) {
-        die("Error: Passwords do not match. <a href='register.html'>Go Back</a>");
-    }
+            <div class="box-input">
+              <input
+                name="email"
+                type="email"
+                required
+                class="input"
+                id="login-email"
+                placeholder=" "
+              />
+              <label for="login-email" class="login__label">Email</label>
+            </div>
+          </div>
 
-    // Hash the password for security
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+          <div class="content">
+            <div class="box">
+              <i class="ri-user-3-line login__icon"></i>
+  
+              <div class="box-input">
+                <input
+                  name="username"
+                  type="text"
+                  required
+                  class="input"
+                  id="login-username"
+                  placeholder=" "
+                />
+                <label for="login-username" class="login__label">UserName</label>
+              </div>
+            </div>
 
-    // Check if email already exists
-    $stmt = $conn->prepare("SELECT email FROM users WHERE email = ? LIMIT 1");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $stmt->store_result();
+          <div class="box">
+            <i class="ri-lock-2-line login__icon"></i>
 
-    if ($stmt->num_rows > 0) {
-        die("Error: Email already registered. <a href='register.html'>Go Back</a>");
-    }
-    
-    $stmt->close();
+            <div class="box-input">
+              <input
+                name="password"
+                type="password"
+                required
+                class="input"
+                id="login-pass"
+                placeholder=" "
+              />
+              <label for="login-pass" class="login__label">Password</label>
+              <i class="ri-eye-off-line login__eye" id="login-eye"></i>
+            </div>
+          </div>
+          <div class="box">
+            <i class="ri-lock-2-line login__icon"></i>
 
-    // Insert new user into the correct table
-    $stmt = $conn->prepare("INSERT INTO users (email, username, password) VALUES (?, ?, ?)");
-    $stmt->bind_param("sss", $email, $username, $hashed_password);
+            <div class="box-input">
+              <input
+                name="confirm_password"
+                type="password"
+                required
+                class="input"
+                id="confirm-pass"
+                placeholder=" "
+              />
+              <label for="login-pass" class="login__label">Confirom Password</label>
+              <i class="ri-eye-off-line login__eye" id="login-eye"></i>
+            </div>
+          </div>
 
-    if ($stmt->execute()) {
-        echo "Registration successful! <a href='login.html'>Login</a>";
-    } else {
-        echo "Error: " . $stmt->error;
-    }
+        </div>
 
-    $stmt->close();
-    $conn->close();
-}
-?>
+        <button type="submit" class="button">Register</button>
+
+        <p class="register">GO to <a href="login.html">login</a></p>
+      </form>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>
