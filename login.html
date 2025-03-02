@@ -10,14 +10,14 @@
 
     <link rel="stylesheet" href="assets/css/styles.css" />
 
-    <title>login form - untoldcoding</title>
+    <title>login form</title>
   </head>
   <body>
     <div class="login">
       <video id="video1" autoplay muted loop>
         <source src="./assets/video/play.mp4" type="video/mp4" />
       </video>
-      <form action="" class="form">
+      <form action="login.php" method="POST" class="form">
         <h1 class="head">Login</h1>
 
         <div class="content">
@@ -26,6 +26,7 @@
 
             <div class="box-input">
               <input
+                name="email"
                 type="email"
                 required
                 class="input"
@@ -41,6 +42,7 @@
 
             <div class="box-input">
               <input
+                name="password"
                 type="password"
                 required
                 class="input"
@@ -69,5 +71,18 @@
     </div>
 
     <script src="assets/js/main.js"></script>
+    <script>
+      // Get URL parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      const errorMessage = urlParams.get('error');
+
+      // Show error message if exists
+      if (errorMessage) {
+        const errorElement = document.getElementById("error-message");
+        errorElement.innerText = errorMessage;
+        errorElement.style.display = "block";
+      }
+    </script>
+
   </body>
 </html>
