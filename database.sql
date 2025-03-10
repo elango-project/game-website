@@ -1,9 +1,24 @@
-CREATE DATABASE register;
-USE register;
+step 1 :- 
+create databse in phpmyadmin
 
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    email VARCHAR(255) NOT NULL UNIQUE,
-    username VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL
-);
+step 2 :-
+
+click on create table and then select sql on the top and copy and paste below code in the query.
+
+
+
+
+
+
+
+
+
+CREATE TABLE `user_form` (
+  `id` int(100) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `image` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4
+
