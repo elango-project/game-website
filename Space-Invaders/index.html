@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colorful Space Invaders</title>
+    <style>
+        body {
+            margin: 5;
+            overflow: hidden;
+            background: radial-gradient(circle, #1a1a2e, #16213e);
+        }
+        canvas {
+            display: block;
+            background: url('img/background.jpeg') repeat;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas"></canvas>
+    <audio id="shootSound" src="https://www.soundjay.com/button/beep-07.wav"></audio>
+    <audio id="explosionSound" src="https://www.soundjay.com/explosion/explosion-02.wav"></audio>
+    <audio id="backgroundMusic" src="https://www.soundjay.com/background-music.mp3" loop></audio>
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = 800;
+        canvas.height = 600;
+
+        const spaceshipImg = new Image();
+        spaceshipImg.src = "img/spaceship.png";
+
+        const enemyImg = new Image();
+        enemyImg.src = "img/alien.png";
+
+        const bossImg = new Image();
+        bossImg.src = "https://i.imgur.com/N5TzEJq.png";
+
+        const powerUpImg = new Image();
+        powerUpImg.src = "https://i.imgur.com/e1s7h2P.png";
+
+        let player = {
+            x: canvas.width / 2 - 25,
+            y: canvas.height - 70,
+            width: 50,
+            height: 50,
+            lives: 5,
+            powerUp: null
+        };
+        
+        let bullets = [];
+        let enemies = [];
+        let explosions = [];
+        let powerUps = [];
+        let score = 0;
+        let highScore = localStorage.getItem("highScore") || 0;
+        let gameOver = false;
+        let enemySpeed = 0.3;
+        let wave = 1;
+
+        function drawPlayer() {
+            ctx.drawImage(spaceshipImg, player.x, player.y, player.width, player.height);
+        }
+
+        function drawBullets() {
+            ctx.fillStyle = "yellow";
+            bullets.forEach((bullet, index) => {
+                ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
+                bullet.y -= bullet.speed;
+                if (bullet.y < 0) bullets.splice(index, 1);
+            });
+        }
+
+        function drawEnemies() {
+            enemies.forEach((enemy, index) => {
+                ctx.drawImage(enemyImg, enemy.x, enemy.y, enemy.width, enemy.height);
+                enemy.y += enemy.speed;
+                if (enemy.y > canvas.height) {
+                    enemies.splice(index, 1);
+                    player.lives--;
+                }
+            });
+        }
+
+        function spawnEnemy() {
+            let size = 40;
+            let x = Math.random() * (canvas.width - size);
+            enemies.push({ x, y: 0, width: size, height: size, speed: enemySpeed });
+        }
+
+        function spawnBoss() {
+            enemies.push({ x: canvas.width / 2 - 50, y: 50, width: 100, height: 100, speed: 0.5, boss: true });
+        }
+
+        function spawnPowerUp() {
+            let size = 30;
+            let x = Math.random() * (canvas.width - size);
+            powerUps.push({ x, y: 0, width: size, height: size, speed: 2 });
+        }
+
+        function checkCollisions() {
+            bullets.forEach((bullet, bIndex) => {
+                enemies.forEach((enemy, eIndex) => {
+                    if (
+                        bullet.x < enemy.x + enemy.width &&
+                        bullet.x + bullet.width > enemy.x &&
+                        bullet.y < enemy.y + enemy.height &&
+                        bullet.y + bullet.height > enemy.y
+                    ) {
+                        bullets.splice(bIndex, 1);
+                        enemies.splice(eIndex, 1);
+                        explosions.push({ x: enemy.x, y: enemy.y });
+                        document.getElementById("explosionSound").play();
+                        score += enemy.boss ? 50 : 10;
+                        if (score % 100 === 0) spawnBoss();
+                    }
+                });
+            });
+        }
+
+        function drawHUD() {
+            ctx.fillStyle = "white";
+            ctx.font = "20px Arial";
+            ctx.fillText("Score: " + score, 10, 30);
+            ctx.fillText("High Score: " + highScore, 10, 60);
+            ctx.fillText("Lives: " + player.lives, canvas.width - 120, 30);
+        }
+
+        function gameLoop() {
+            if (gameOver) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawPlayer();
+            drawBullets();
+            drawEnemies();
+            drawHUD();
+            checkCollisions();
+            if (player.lives <= 0) {
+                gameOver = true;
+                setTimeout(() => {
+                    alert("Game Over! Your Score: " + score);
+                    document.location.reload();
+                }, 500);
+            }
+            requestAnimationFrame(gameLoop);
+        }
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "ArrowLeft" && player.x > 0) player.x -= 20;
+            if (e.key === "ArrowRight" && player.x < canvas.width - player.width) player.x += 20;
+            if (e.key === " ") {
+                bullets.push({ x: player.x + 20, y: player.y, width: 5, height: 10, speed: 5 });
+                document.getElementById("shootSound").play();
+            }
+        });
+
+        setInterval(spawnEnemy, 1000);
+        setInterval(spawnPowerUp, 15000);
+        gameLoop();
+    </script>
+</body>
+</html>
