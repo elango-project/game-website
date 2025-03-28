@@ -126,8 +126,7 @@
                                     <i class="bx bxs-star"></i>
                                     <span>4.7</span>
                                 </div>
-                                <a href="imgindex.html" class="box-btn"><i class="bx bx-down-arrow-alt bx-tada"></i
-                  ></a>
+                                <a href="imgindex.html" class="box-btn"><i class="bx bx-down-arrow-alt bx-tada"></i></a>
                             </div>
                         </div>
                     </div>
@@ -180,8 +179,7 @@
                                     <i class="bx bxs-star"></i>
                                     <span>4.7</span>
                                 </div>
-                                <a href="clumsy bird/index.html" class="box-btn"><i class="bx bx-down-arrow-alt bx-tada"></i
-                  ></a>
+                                <a href="clumsy bird/index.html" class="box-btn"><i class="bx bx-down-arrow-alt bx-tada"></i></a>
                             </div>
                         </div>
                     </div>
@@ -207,17 +205,17 @@
                 <!-- Slide 6 -->
                 <div class="swiper-slide">
                     <div class="box">
-                        <img src="img/trending6.jpg" alt="">
+                    <a href="./snake-game/index.html"><img src="./img/Snake-game.png" alt="">
                         <div class="box-text">
-                            <h2>Dying Light 2</h2>
-                            <h3>Action</h3>
+                            <h2>Snake</h2>
+                            <h3>Casual</h3>
                             <div class="rating-download">
                                 <div class="rating">
                                     <i class="bx bxs-star"></i>
                                     <span>4.7</span>
                                 </div>
-                                <a href="/" class="box-btn"><i class="bx bx-down-arrow-alt bx-tada"></i
-                  ></a>
+                                <a href="./snake-game/index.html" class="box-btn"><i class="bx bx-down-arrow-alt bx-tada"></i
+                  ></a></a>
                             </div>
                         </div>
                     </div>
@@ -225,17 +223,17 @@
                 <!-- Slide 7 -->
                 <div class="swiper-slide">
                     <div class="box">
-                        <img src="img/trending7.png" alt="">
+                    <a href="Space-Invaders/index.html" ><img src="img/space invaders.png" alt="">
                         <div class="box-text">
-                            <h2>HALO infinite</h2>
-                            <h3>Action</h3>
+                            <h2>Space Invaders</h2>
+                            <h3>Action,Space</h3>
                             <div class="rating-download">
                                 <div class="rating">
                                     <i class="bx bxs-star"></i>
                                     <span>4.7</span>
                                 </div>
-                                <a href="/" class="box-btn"><i class="bx bx-down-arrow-alt bx-tada"></i
-                  ></a>
+                                <a href="Space-Invaders/index.html" class="box-btn"><i class="bx bx-down-arrow-alt bx-tada"></i
+                  ></a></a>
                             </div>
                         </div>
                     </div>
